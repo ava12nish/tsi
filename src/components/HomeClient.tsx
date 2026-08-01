@@ -146,6 +146,8 @@ export default function HomeClient({ settings, events }: HomeClientProps) {
               </Link>
               <a
                 href={settings.secondary_cta_url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`w-full sm:w-auto px-8 py-4 bg-transparent border-2 rounded-full font-black text-sm tracking-widest uppercase transition-all duration-200 text-center active:scale-98 ${
                   (isBerryTheme || isMintTheme) ? 'border-plum/30 text-plum hover:bg-plum/10 hover:border-plum' : isSunsetTheme ? 'border-white/40 text-white hover:bg-white/10 hover:border-white' : 'border-linen/30 text-linen hover:bg-linen/10 hover:border-linen'
                 }`}
