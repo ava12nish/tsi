@@ -180,30 +180,38 @@ export default function HomeClient({ settings, events }: HomeClientProps) {
               </div>
 
               {/* Top card — current image, straight on */}
-              <div className="absolute inset-0 rounded-3xl overflow-hidden border-4 border-linen/50 shadow-2xl">
+              <div className="absolute inset-0 rounded-3xl overflow-hidden border-4 border-linen/50 shadow-2xl transform-gpu">
+                {heroImages.map((img, i) => (
                   <div
-                    key={slideIndex}
-                    className="enter-fade absolute inset-0"
+                    key={i}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out transform-gpu ${
+                      i === slideIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                    }`}
                   >
                     <Image
-                      src={heroImages[slideIndex].src}
-                      alt={heroImages[slideIndex].label}
+                      src={img.src}
+                      alt={img.label}
                       fill
                       sizes="(min-width: 768px) 40vw, 100vw"
-                      unoptimized={shouldBypassImageOptimization(heroImages[slideIndex].src)}
+                      unoptimized={shouldBypassImageOptimization(img.src)}
                       className="object-cover object-center"
-                      priority={slideIndex === 0}
+                      priority={i === 0 || i === 1}
                     />
                   </div>
+                ))}
 
                 {/* Caption strip at bottom of top card */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-plum/80 to-transparent px-4 pb-4 pt-10">
-                  <p
-                    key={`caption-${slideIndex}`}
-                    className="enter-fade text-linen text-xs font-black uppercase tracking-widest"
-                  >
-                    {heroImages[slideIndex].label}
-                  </p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-plum/80 to-transparent px-4 pb-4 pt-10 z-20">
+                  {heroImages.map((img, i) => (
+                    <p
+                      key={`caption-${i}`}
+                      className={`text-linen text-xs font-black uppercase tracking-widest transition-opacity duration-500 ease-in-out ${
+                        i === slideIndex ? 'block opacity-100' : 'hidden opacity-0'
+                      }`}
+                    >
+                      {img.label}
+                    </p>
+                  ))}
 
                   {/* Dots inside the card at bottom */}
                   <div className="flex gap-1.5 mt-2">
